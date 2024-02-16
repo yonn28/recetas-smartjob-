@@ -1,0 +1,33 @@
+<form class="addForm" [formGroup]="addForm" (ngSubmit)="addForm.valid; onSubmit()">
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title">
+      <mat-error *ngIf="addForm.get('title')?.hasError('required')">Title is required</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Summary</mat-label>
+      <textarea matInput formControlName="summary"></textarea>
+      <mat-error *ngIf="addForm.get('summary')?.hasError('required')">Summary is required</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Extended Ingredients</mat-label>
+      <textarea matInput formControlName="extendedIngredients"></textarea>
+      <mat-error *ngIf="addForm.get('extendedIngredients')?.hasError('required')">Extended Ingredients are required</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Instructions</mat-label>
+      <textarea matInput formControlName="instructions"></textarea>
+      <mat-error *ngIf="addForm.get('instructions')?.hasError('required')">Instructions are required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Image URL</mat-label>
+        <input matInput formControlName="image">
+        <mat-error *ngIf="addForm.get('image')?.hasError('required')">Image URL is required</mat-error>
+    </mat-form-field>
+  
+    <button mat-raised-button color="primary" [disabled]="!addForm.valid" type="submit">Submit</button>
+  </form>

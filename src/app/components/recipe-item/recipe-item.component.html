@@ -1,0 +1,22 @@
+<div class="recipe-container">
+    <h2>{{ recipe.title }}</h2>
+    <p [innerHTML]="recipe.summary"><strong>Summary:</strong></p>
+    <p><strong>Aggregate Likes:</strong> {{ recipe.aggregateLikes }}</p>
+    <p><strong>Cooking Minutes:</strong> {{ recipe.cookingMinutes }}</p>
+    <p><strong>Health Score:</strong> {{ recipe.healthScore }}</p>
+    <!-- Add more properties as needed -->
+    
+    <h3>Ingredients:</h3>
+    <ul>
+      <li *ngFor="let ingredient of recipe.extendedIngredients">{{ ingredient.name }}</li>
+    </ul>
+    
+    <h3>Instructions:</h3>
+    <p [innerHTML]="recipe.instructions"></p>
+    
+    <h3>Image:</h3>
+    <img src="{{ recipe.image }}" alt="Recipe Image">
+    
+    <h3>Source:</h3>
+    <p><a href="{{ recipe.sourceUrl }}" target="_blank">{{ recipe.sourceName }}</a></p>
+</div>

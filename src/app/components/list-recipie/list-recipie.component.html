@@ -1,0 +1,14 @@
+<div class="recipie-container">
+    @for(recipie of recipies; track recipie.id ){
+       <div class="recipie" [routerLink]="['/item', recipie.id]">
+          <img class="recipie-img" src="{{recipie.image}}">
+          <div class="recipie-title">{{recipie.title}}</div>
+          <div class="recipie-text"  [innerHTML]="recipie.summary"></div>
+          <div class="recipie-btns">
+            <mat-icon [routerLink]="['/edit', recipie.id]">edit</mat-icon> 
+            <mat-icon (click)="$event.stopPropagation(); deleteRecipe(recipie.id)">delete</mat-icon> 
+          </div>
+       </div>
+    }
+  </div>
+  

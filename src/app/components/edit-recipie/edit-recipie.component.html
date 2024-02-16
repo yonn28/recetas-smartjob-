@@ -1,0 +1,27 @@
+<form class="editForm" [formGroup]="editForm" (ngSubmit)="editForm.valid; onSubmit()">
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title">
+      <mat-error *ngIf="editForm.get('title')?.hasError('required')">Title is required</mat-error>
+    </mat-form-field> 
+  
+    <mat-form-field>
+      <mat-label>Summary</mat-label>
+      <textarea matInput formControlName="summary"></textarea>
+      <mat-error *ngIf="editForm.get('summary')?.hasError('required')">Summary is required</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Extended Ingredients</mat-label>
+      <textarea matInput formControlName="extendedIngredients"></textarea>
+      <mat-error *ngIf="editForm.get('extendedIngredients')?.hasError('required')">Extended Ingredients are required</mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Instructions</mat-label>
+      <textarea matInput formControlName="instructions"></textarea>
+      <mat-error *ngIf="editForm.get('instructions')?.hasError('required')">Instructions are required</mat-error>
+    </mat-form-field>
+  
+    <button mat-raised-button color="primary" [disabled]="!editForm.valid" type="submit">Submit</button>
+  </form>
