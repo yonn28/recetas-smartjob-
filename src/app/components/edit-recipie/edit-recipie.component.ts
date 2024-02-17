@@ -47,19 +47,36 @@ export class EditRecipieComponent implements OnInit {
       extendedIngredients: [this.formatExtendedIngredients(this.recipe.extendedIngredients), Validators.required],
       instructions: [this.recipe.instructions, Validators.required]
     });
-    console.log(this.recipe);
   }
 
   formatExtendedIngredients(extendedIngredients: any[]): string {
-    return extendedIngredients.map(ingredient => `${ingredient.name} (${ingredient.aisle})`).join('\n');
+    return extendedIngredients.map(ingredient => {
+      const formattedAisle = ingredient.aisle ? `(${ingredient.aisle})` : ''; 
+      return `${ingredient.name} ${formattedAisle}`;
+    }).join('\n');
   }
 
   onSubmit() {
+    const extendedIngredientsArray = this.editForm.value.extendedIngredients.split('\n');
+    const extendedIngredientsFormatted = extendedIngredientsArray.map((ingredient:string, index:number) => {
+      const aisleMatch = ingredient.match(/\(([^)]+)\)/); 
+      const aisle = aisleMatch ? aisleMatch[1] : ''; 
+      const name = ingredient.replace(/\([^)]+\)/, '').trim(); 
+  
+      return {
+        id: index,
+        aisle: aisle, 
+        image: '', 
+        consistency: '', 
+        name: name
+      };
+    });
+
     const updatedRecipe = {
       ...this.recipe, 
       title: this.editForm.value.title,
       summary:this.editForm.value.summary,
-      extendedIngredients:this.editForm.value.extendedIngredients.split('\n'),
+      extendedIngredients:extendedIngredientsFormatted ,
       instructions:this.editForm.value.instructions
     };
     this.recipiesService.updateItem(+this.id, updatedRecipe);

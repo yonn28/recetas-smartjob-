@@ -12,14 +12,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './recipe-item.component.scss'
 })
 export class RecipeItemComponent {
-  testId!: string;
+  id!: string;
   recipe!: Recipe;
 
   constructor(private route: ActivatedRoute, private recipiesService: RecipiesService) { }
 
   ngOnInit(): void {
-    this.testId = this.route.snapshot.paramMap.get('id') || '';
-    this.recipe =this.recipiesService.getItem(+this.testId) as Recipe;
+    this.id = this.route.snapshot.paramMap.get('id') || '';
+    this.recipe =this.recipiesService.getItem(+this.id) as Recipe;
   }
 
 

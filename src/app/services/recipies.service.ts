@@ -14,26 +14,29 @@ export class RecipiesService {
   constructor(private http: HttpClient) { }
 
   getRecipies(){
-        // this.http.get<RecipeService>('https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',{
-    //   headers: {
-    //     'X-RapidAPI-Key': '7ce1dae268msh5322cb6b341c755p114df9jsn6d348f726931',
-    //     'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-    //   },
-    //   params: {
-    //     tags: 'vegetarian,dessert',
-    //     number: '20'
-    //   },
-    // }).subscribe({
-    //   next: (res) => {
-    //     this.recipies = res.recipes;
-    //   }
-    // });
+    const recipiesStorage =localStorage.getItem('recipies');
 
-    of<RecipeService>(mockRecipe as RecipeService).subscribe({
+    if(recipiesStorage){
+      this.recipiesSubject.next(JSON.parse(recipiesStorage));
+      return;
+    }
+    
+    this.http.get<RecipeService>('https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',{
+      headers: {
+        'X-RapidAPI-Key': '7ce1dae268msh5322cb6b341c755p114df9jsn6d348f726931',
+        'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
+      },
+      params: {
+        tags: 'vegetarian,dessert',
+        number: '20'
+      },
+    }).subscribe({
       next: (res) => {
         this.recipiesSubject.next(res.recipes);
+        localStorage.setItem('recipies', JSON.stringify(res.recipes));
       }
-    })
+    });
+
   }
 
 
@@ -61,7 +64,7 @@ export class RecipiesService {
   
   addItem(newItem: Recipe){
     const currentItems = this.recipiesSubject.getValue();
-    currentItems.push(newItem);
+    currentItems.unshift(newItem);
     this.recipiesSubject.next(currentItems);
   }
 }

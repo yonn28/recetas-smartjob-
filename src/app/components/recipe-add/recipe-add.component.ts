@@ -33,7 +33,7 @@ import { Recipe } from '../../../definitions/recipie';
 export class RecipeAddComponent {
   addForm!: FormGroup;
 
-  constructor(private route: ActivatedRoute,private recipiesService: RecipiesService,private formBuilder: FormBuilder, private router: Router) {}
+  constructor(private recipiesService: RecipiesService,private formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.addForm = this.formBuilder.group({
@@ -46,17 +46,25 @@ export class RecipeAddComponent {
   }
 
   onSubmit() {
+    const extendedIngredientsArray = this.addForm.value.extendedIngredients.split('\n');
+    const extendedIngredientsFormatted = extendedIngredientsArray.map((ingredient:string, index:number) => ({
+      id: index,
+      aisle: '', 
+      image: '', 
+      consistency: '', 
+      name: ingredient.trim(),
+    }));
+
     const newRecipe = {
       ...mockRecipe.recipes[0],
       id: Math.floor(Math.random() * 1000),
       title: this.addForm.value.title,
       summary: this.addForm.value.summary,
-      extendedIngredients: this.addForm.value.extendedIngredients.split('\n'),
+      extendedIngredients: extendedIngredientsFormatted,
       instructions: this.addForm.value.instructions.split('\n').join(''),
       image: this.addForm.value.image
     } as unknown as Recipe;
     this.recipiesService.addItem(newRecipe);
-    console.log(newRecipe);
     this.router.navigate(['/']);
   } 
 }
