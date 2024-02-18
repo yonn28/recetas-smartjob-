@@ -1,5 +1,5 @@
 <div class="recipie-container">
-    @for(recipie of recipies; track recipie.id ){
+    @for(recipie of (recipies | async) ; track recipie.id ){
        <div class="recipie" [routerLink]="['/item', recipie.id]">
           <img class="recipie-img" src="{{recipie.image}}">
           <div class="recipie-title">{{recipie.title}}</div>

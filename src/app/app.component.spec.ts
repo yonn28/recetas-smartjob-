@@ -1,10 +1,23 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { mockRecipe } from '../mocks/mock-recipe';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, HttpClientTestingModule],
+      providers: [
+        { 
+          provide: ActivatedRoute,          
+          useValue: {
+              snapshot: {
+                paramMap: convertToParamMap({ id: mockRecipe.recipes[0].id }) 
+              }
+          } 
+        } 
+      ]
     }).compileComponents();
   });
 
@@ -14,16 +27,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'movies-app' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('movies-app');
-  });
-
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, movies-app');
+    const compiled = fixture.nativeElement.querySelector('.app-header-name');
+    expect(compiled.textContent).toContain('Recipe app');
   });
 });

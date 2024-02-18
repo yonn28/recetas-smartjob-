@@ -1,41 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Recipe, RecipeService } from '../../definitions/recipie';
 import { BehaviorSubject} from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Recipe } from '../definitions/recipie';
+import { mockRecipe } from './mock-recipe';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RecipiesService {
+export class MockRecipiesService {
 
   private recipiesSubject = new BehaviorSubject<Recipe[]>([]);
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
   getRecipies(){
-    const recipiesStorage =localStorage.getItem('recipies');
-
-    if(recipiesStorage){
-      this.recipiesSubject.next(JSON.parse(recipiesStorage));
-      return;
-    }
-    
-    this.http.get<RecipeService>('https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random',{
-      headers: {
-        'X-RapidAPI-Key': '7ce1dae268msh5322cb6b341c755p114df9jsn6d348f726931',
-        'X-RapidAPI-Host': 'spoonacular-recipe-food-nutrition-v1.p.rapidapi.com'
-      },
-      params: {
-        tags: 'vegetarian,dessert',
-        number: '20'
-      },
-    }).subscribe({
-      next: (res) => {
-        this.recipiesSubject.next(res.recipes);
-        localStorage.setItem('recipies', JSON.stringify(res.recipes));
-      }
-    });
-
+    let mockRecipes = mockRecipe.recipes as unknown as Recipe[];
+    this.recipiesSubject.next(mockRecipes);
   }
 
 

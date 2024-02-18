@@ -7,9 +7,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { RecipiesService } from '../../services/recipies.service';
-import { mockRecipe } from '../../../definitions/mock-recipe';
+import { mockRecipe } from '../../../mocks/mock-recipe';
 import { Recipe } from '../../../definitions/recipie';
 
 @Component({
@@ -33,7 +33,10 @@ import { Recipe } from '../../../definitions/recipie';
 export class RecipeAddComponent {
   addForm!: FormGroup;
 
-  constructor(private recipiesService: RecipiesService,private formBuilder: FormBuilder, private router: Router) {}
+  constructor(
+    private recipiesService: RecipiesService,
+    private formBuilder: FormBuilder, private router: Router
+    ) {}
 
   ngOnInit(): void {
     this.addForm = this.formBuilder.group({

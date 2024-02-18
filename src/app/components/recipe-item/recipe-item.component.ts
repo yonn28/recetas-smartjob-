@@ -15,7 +15,10 @@ export class RecipeItemComponent {
   id!: string;
   recipe!: Recipe;
 
-  constructor(private route: ActivatedRoute, private recipiesService: RecipiesService) { }
+  constructor(
+      private route: ActivatedRoute,
+      private recipiesService: RecipiesService
+    ) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id') || '';
