@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 
 
-fdescribe('ListRecipieComponent', () => {
+describe('ListRecipieComponent', () => {
   let component: ListRecipieComponent;
   let fixture: ComponentFixture<ListRecipieComponent>;
   let recipeService:RecipiesService;
